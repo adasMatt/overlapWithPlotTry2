@@ -12,6 +12,7 @@ struct ContentView: View {
     @ObservedObject private var overlap = overlapIntegralClass()
 
     @State var howFarInput: String = "0.0"
+    @State var guesses: String = "0.0"
     @State var meanValueOutput: String = "1.0"
     @State var analyticResult: String = "1.0"
     @State var error: String = "0.0"
@@ -37,6 +38,14 @@ struct ContentView: View {
                         .font(.callout)
                         .bold()
                     TextField("R", text: $howFarInput)
+                        .padding()
+                }.padding()
+                
+                HStack(alignment: .center) {
+                    Text("How many guesses:")
+                        .font(.callout)
+                        .bold()
+                    TextField("N", text: $guesses)
                         .padding()
                 }.padding()
                 
@@ -86,8 +95,8 @@ struct ContentView: View {
     
     func meanValueAndErrorCalculation() {
         
-        meanValueOutput = "\(overlap.overlapMeanFunc(howManyTimes: Double, howFarAreTheProtons: <#T##Double#>).0)"
-        error = "\(overlap.overlapMeanFunc(howManyTimes: <#T##Double#>, howFarAreTheProtons: <#T##Double#>).1)"
+        meanValueOutput = "\(overlap.overlapMeanFunc(howManyTimes: Double(guesses)!, howFarAreTheProtons: Double(howFarInput)!).0)"
+        error = "\(overlap.overlapMeanFunc(howManyTimes: Double(guesses)!, howFarAreTheProtons: Double(howFarInput)!).1)"
         
     }
     
