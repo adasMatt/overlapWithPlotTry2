@@ -70,11 +70,10 @@ class Tests_macOS: XCTestCase {
         let overlap = overlapIntegralClass()
         
         var overlapTest = overlap.overlapMeanFunc(howManyTimes: 5000000, howFarAreTheProtons: 0)
-        XCTAssertEqual(overlapTest, 1.0, accuracy: 5.0E-2)
+        XCTAssertEqual(overlapTest.0, 1.0, accuracy: 5.0E-2)
 
         overlapTest = overlap.overlapMeanFunc(howManyTimes: 5000000, howFarAreTheProtons: overlap.a)
-        // assert 0.8583853627333655
-        XCTAssertEqual(overlapTest, 0.8583853627333655, accuracy: 5.0E-2)
+        XCTAssertEqual(overlapTest.0, 0.8583853627333655, accuracy: 5.0E-2)
     }
     /*
     func testLaunchPerformance() throws {

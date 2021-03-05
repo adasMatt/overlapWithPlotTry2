@@ -1,5 +1,5 @@
 //
-//  psiClass.swift
+//  overlapIntegral.swift
 //  overlapWithPlot
 //
 //  Created by Matthew Adas on 3/1/21.
@@ -23,7 +23,7 @@ class overlapIntegralClass: ObservableObject {
     typealias equationHandler = (Double, Double, Double) -> Double
     
     let a = 0.529177210903   // real Bohr radius in angstroms
-    let xMin = -5.0         // not sure about -1 to 1, not good for R > 1
+    let xMin = -5.0         // bounding box values
     let xMax = 5.0
     let yMin = -5.0
     let yMax = 5.0
@@ -57,15 +57,17 @@ class overlapIntegralClass: ObservableObject {
     // howManyTimes = 50,000
     // calculate overlap at random x,y,z, check result and store points for plotting
     // excluding point storage for now but still using "point" tuple, might belong in DrawingView struct but for now just going to define the function in this class
-    func overlapMeanFunc(howManyTimes: Double, howFarAreTheProtons: Double) -> Double {
+    func overlapMeanFunc(howManyTimes: Double, howFarAreTheProtons: Double) -> (Double, Double) {
         
         var psiTimesPsi = 0.0
         var psiByPsiSum = 0.0
         var overlapMeanValue = 0.0
         let R = Double(howFarAreTheProtons)
         let howManyTimesDouble = Double(howManyTimes)
-        let analyticResultDouble = analyticResultFunc(howFarAreTheProtons: howFarAreTheProtons)
         
+        // define analytic result (aka true integral value)
+        let analyticResultDouble = analyticResultFunc(howFarAreTheProtons: howFarAreTheProtons)
+        var logOfError = 0.0
         
         var numberOfGuesses = 0.0
         //var pointsInRadius = 0.0
@@ -110,11 +112,13 @@ class overlapIntegralClass: ObservableObject {
         // divide psiByPsiSum by howManyTimes to return the mean integral value
         overlapMeanValue = psiByPsiSum/howManyTimesDouble * volume
         
+        // where does the error go
+        logOfError = log10(abs(overlapMeanValue - analyticResultDouble)/analyticResultDouble)
         
-        
-        return overlapMeanValue
+        return (overlapMeanValue, logOfError)
         
     }
+    
     
     // compare to true value
     /* analytical result of Overlap Integral
