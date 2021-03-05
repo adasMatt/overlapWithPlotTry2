@@ -97,6 +97,7 @@ struct ContentView: View {
         
         meanValueOutput = "\(overlap.overlapMeanFunc(howManyTimes: Double(guesses)!, howFarAreTheProtons: Double(howFarInput)!).0)"
         error = "\(overlap.overlapMeanFunc(howManyTimes: Double(guesses)!, howFarAreTheProtons: Double(howFarInput)!).1)"
+        analyticResult = "\(overlap.analyticResultFunc(howFarAreTheProtons: Double(howFarInput)!))"
         
     }
     
